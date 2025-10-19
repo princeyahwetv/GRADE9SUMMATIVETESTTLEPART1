@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRADE 9 HTML SUMMATIVE TEST PART 1</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+            color: #333;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .exam-content {
+            padding: 30px;
+        }
+
+        .question-container {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4facfe;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .question-container:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .option:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: #4facfe;
+        }
+
+        .option.selected {
+            border-color: #4facfe;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .results {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score {
+            font-size: 2em;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .grade {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .section-header {
+            background: #f1f3f4;
+            padding: 15px 25px;
+            margin: 30px -30px 25px -30px;
+            border-left: 5px solid #ff6b6b;
+            font-weight: 600;
+            font-size: 1.2em;
+            color: #333;
+            display: none;
+        }
+
+        .section-header.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .exam-content {
+                padding: 20px;
+            }
+            
+            .question-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>GRADE 9 HTML SUMMATIVE TEST</h1>
+            <p>PART 1: Programming Trends & Computer Ergonomics | 20 Items</p>
+            <div id="timer" style="font-size: 1.5em; font-weight: bold; margin-top: 15px; display: none;">
+                Time Remaining: <span id="timeDisplay">15:00</span>
+            </div>
+        </header>
+
+        <main class="exam-content">
+            <!-- Student Information Form -->
+            <div id="studentInfoSection" class="question-container" style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-left: 5px solid #2196f3; display: block;">
+                <h2 style="color: #1976d2; margin-bottom: 25px; text-align: center; font-size: 1.8em;">📝 Student Information Form</h2>
+                <div style="display: grid; gap: 20px; max-width: 600px; margin: 0 auto;">
+                    <!-- Personal Information Section -->
+                    <div style="background: rgba(255,255,255,0.7); padding: 20px; border-radius: 12px; border: 1px solid #ddd;">
+                        <h3 style="color: #1976d2; margin-bottom: 15px; font-size: 1.2em; border-bottom: 2px solid #2196f3; padding-bottom: 5px;">👤 Student Information</h3>
+                        
+                        <div style="display: grid; gap: 15px;">
+                            <div>
+                                <label for="studentLastName" style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Last Name: *</label>
+                                <input type="text" id="studentLastName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; transition: border-color 0.3s ease;" placeholder="Enter your last name">
+                            </div>
+                            
+                            <div>
+                                <label for="studentFirstName" style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">First Name: *</label>
+                                <input type="text" id="studentFirstName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; transition: border-color 0.3s ease;" placeholder="Enter your first name">
+                            </div>
+                            
+                            <div>
+                                <label for="studentMiddleName" style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Middle Name:</label>
+                                <input type="text" id="studentMiddleName" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; transition: border-color 0.3s ease;" placeholder="Enter your middle name (optional)">
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <label for="studentGrade" style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Grade Level: *</label>
+                                    <select id="studentGrade" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; transition: border-color 0.3s ease; background: white;">
+                                        <option value="">Select Grade</option>
+                                        <option value="Grade 7">Grade 7</option>
+                                        <option value="Grade 8">Grade 8</option>
+                                        <option value="Grade 9">Grade 9</option>
+                                        <option value="Grade 10">Grade 10</option>
+                                        <option value="Grade 11">Grade 11</option>
+                                        <option value="Grade 12">Grade 12</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="studentSection" style="display: block; font-weight: 600; margin-bottom: 5px; color: #333;">Section: *</label>
+                                    <input type="text" id="studentSection" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; transition: border-color 0.3s ease;" placeholder="Enter your section">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Instructions -->
+                    <div style="background: rgba(255,235,59,0.1); padding: 20px; border-radius: 12px; border: 2px solid #ffc107;">
+                        <h3 style="color: #f57c00; margin-bottom: 15px; font-size: 1.2em;">⚠️ Test Instructions</h3>
+                        <ul style="color: #333; line-height: 1.6; margin: 0; padding-left: 20px;">
+                            <li>This test contains <strong>20 multiple-choice questions</strong></li>
+                            <li>You have <strong>15 minutes</strong> to complete the test</li>
+                            <li>Questions are displayed <strong>one at a time</strong></li>
+                            <li>Use navigation buttons or arrow keys to move between questions</li>
+                            <li>You earn <strong>bonus time (+5 seconds)</strong> for each correct answer</li>
+                            <li>Questions are <strong>randomly shuffled</strong> for each attempt</li>
+                            <li><strong>You can submit with unanswered questions</strong> (they will be marked incorrect)</li>
+                            <li>Make sure all information above is correct before starting</li>
+                        </ul>
+                    </div>
+
+                    <!-- Agreement Checkbox -->
+                    <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: 500; color: #333;">
+                            <input type="checkbox" id="agreementCheck" required style="margin-right: 10px; transform: scale(1.2); accent-color: #2196f3;">
+                            I confirm that all the information provided is accurate and I understand the test instructions.
+                        </label>
+                    </div>
+
+                    <!-- Start Test Button -->
+                    <button type="button" id="startTestBtn" disabled style="background: #ccc; color: white; border: none; padding: 18px 40px; font-size: 1.2em; font-weight: 600; border-radius: 25px; cursor: not-allowed; margin-top: 10px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        🚀 Start Test (15 Minutes)
+                    </button>
+                </div>
+            </div>
+
+            <div id="examSection" style="display: none;">
+                <!-- Question Navigation -->
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 25px; text-align: center;">
+                    <div style="margin-bottom: 15px;">
+                        <span style="font-weight: 600; color: #333;">Question <span id="currentQuestionNum">1</span> of 20</span>
+                    </div>
+                    
+                    <!-- Question Grid -->
+                    <div style="margin: 20px 0;">
+                        <h4 style="color: #666; margin-bottom: 10px; font-size: 0.9em;">Question Progress:</h4>
+                        <div id="questionGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); gap: 8px; max-width: 600px; margin: 0 auto;"></div>
+                        <div style="margin-top: 10px; font-size: 0.8em; color: #666;">
+                            <span style="display: inline-block; margin: 0 10px;"><span style="display: inline-block; width: 12px; height: 12px; background: #4facfe; border-radius: 3px; margin-right: 5px;"></span>Current</span>
+                            <span style="display: inline-block; margin: 0 10px;"><span style="display: inline-block; width: 12px; height: 12px; background: #1e7e34; border-radius: 3px; margin-right: 5px;"></span>Answered</span>
+                            <span style="display: inline-block; margin: 0 10px;"><span style="display: inline-block; width: 12px; height: 12px; background: white; border: 1px solid #ddd; border-radius: 3px; margin-right: 5px;"></span>Unanswered</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                        <button type="button" id="prevBtn" style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9em;">← Previous</button>
+                        <button type="button" id="nextBtn" style="background: #4facfe; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9em;">Next →</button>
+                        <button type="button" id="submitTestBtn" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-size: 0.9em; font-weight: 600; display: none;">🎯 Submit Test</button>
+                        <button type="button" id="summaryBtn" style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9em;">📋 Summary</button>
+                    </div>
+                </div>
+            <form id="examForm">
+                <!-- Questions will be dynamically generated here -->
+            </form>
+
+            <div class="results" id="results">
+                <div class="score" id="scoreDisplay"></div>
+                <div class="grade" id="gradeDisplay"></div>
+                <p id="feedbackMessage"></p>
+                <p id="studentInfo" style="margin-top: 15px; font-weight: 600; color: #666;"></p>
+                <button class="reset-btn" onclick="resetTest()">Take Test Again</button>
+                <button class="reset-btn" onclick="sendResultsToTeacher()" style="background: #28a745; margin-left: 15px;">📧 Send Results to Teacher</button>
+            </div>
+            </div> <!-- Close examSection -->
+
+            <!-- Summary Modal -->
+            <div id="summaryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; overflow-y: auto;">
+                <div style="background: white; margin: 20px auto; max-width: 800px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                    <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 25px; border-radius: 15px 15px 0 0;">
+                        <h2 style="margin: 0; font-size: 1.8em; text-align: center;">📋 Test Summary</h2>
+                        <p style="margin: 10px 0 0 0; text-align: center; opacity: 0.9;">Review your answers before submitting</p>
+                    </div>
+                    <div style="padding: 30px; max-height: 70vh; overflow-y: auto;">
+                        <div id="summaryContent"></div>
+                        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee;">
+                            <button type="button" id="closeSummaryBtn" style="background: #6c757d; color: white; border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer; margin-right: 15px; font-size: 1em;">Close Summary</button>
+                            <button type="button" id="submitFromSummaryBtn" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 600;">Submit Test</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Original question data with correct answers
+        const originalQuestions = [
+            {
+                question: "Which of the following is a current trend in programming?",
+                options: ["Typewriting", "Handwriting recognition", "Artificial Intelligence", "Morse code"],
+                correct: 2
+            },
+            {
+                question: "What is a career opportunity in computer programming?",
+                options: ["Electrician", "Plumber", "Software Developer", "Carpenter"],
+                correct: 2
+            },
+            {
+                question: "Which of the following skills is essential for a programmer?",
+                options: ["Public speaking", "Logical thinking", "Manual labor", "Singing"],
+                correct: 1
+            },
+            {
+                question: "Mobile app development is an example of:",
+                options: ["Manual trade", "Programming trend", "Social work", "None of the above"],
+                correct: 1
+            },
+            {
+                question: "Game development falls under:",
+                options: ["Programming trend", "Data entry", "Cooking", "None"],
+                correct: 0
+            },
+            {
+                question: "Which skill helps programmers solve problems?",
+                options: ["Typing fast", "Memory", "Problem-solving", "Dancing"],
+                correct: 2
+            },
+            {
+                question: "A person who builds websites is called a:",
+                options: ["Sitewalker", "Web developer", "Blogger", "Hacker"],
+                correct: 1
+            },
+            {
+                question: "Cybersecurity helps protect:",
+                options: ["Houses", "Computers and data", "Chairs", "People"],
+                correct: 1
+            },
+            {
+                question: "Which programming language is often used by beginners?",
+                options: ["Latin", "Python", "Greek", "Morse"],
+                correct: 1
+            },
+            {
+                question: "Internet of Things (IoT) connects:",
+                options: ["Books and shelves", "Devices to the internet", "Animals and plants", "Desks and chairs"],
+                correct: 1
+            },
+            {
+                question: "What health problem is common among computer users?",
+                options: ["Toothache", "Eye strain", "Sunburn", "Cough"],
+                correct: 1
+            },
+            {
+                question: "Poor posture while using a computer may cause:",
+                options: ["Good sleep", "Back pain", "Faster typing", "No issues"],
+                correct: 1
+            },
+            {
+                question: "Which is NOT an ergonomic tip?",
+                options: ["Use a comfortable chair", "Sit too close to the screen", "Take regular breaks", "Keep wrists straight"],
+                correct: 1
+            },
+            {
+                question: "Eye strain can be prevented by:",
+                options: ["Blinking often", "Staring without blinking", "Turning off lights", "Closing your eyes all day"],
+                correct: 0
+            },
+            {
+                question: "Which of the following is an example of good ergonomics?",
+                options: ["Bending the wrists", "Using wrist rest", "Looking at the keyboard always", "Leaning forward to screen"],
+                correct: 1
+            },
+            {
+                question: "Ergonomics focuses on:",
+                options: ["Computers only", "Human comfort and productivity", "Cars and transport", "Decoration"],
+                correct: 1
+            },
+            {
+                question: "Which part is affected most by bad computer posture?",
+                options: ["Feet", "Back", "Ears", "Nose"],
+                correct: 1
+            },
+            {
+                question: "How often should you take breaks?",
+                options: ["Every 3 hours", "Every 30–60 minutes", "Once a day", "Never"],
+                correct: 1
+            },
+            {
+                question: "The best position for your monitor is:",
+                options: ["Below eye level", "Eye level", "On the floor", "Over your head"],
+                correct: 1
+            },
+            {
+                question: "Proper chair height should allow:",
+                options: ["Knees above hips", "Feet flat on the floor", "Leaning backward", "Slouching"],
+                correct: 1
+            }
+        ];
+
+        // Global variables
+        let shuffledQuestions = [];
+        let correctAnswers = {};
+        let totalSeconds = 900; // 15 minutes = 900 seconds
+        let timerRunning = false;
+        let timerInterval = null;
+        let bonusTime = 0;
+        let currentQuestion = 0;
+        let questions = [];
+        let questionOrder = [];
+
+        // Simple timer function that counts down
+        function runTimer() {
+            if (totalSeconds <= 0) {
+                // Time's up!
+                clearInterval(timerInterval);
+                timerRunning = false;
+                autoSubmitTest();
+                return;
+            }
+            
+            // Update display
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const timeString = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+            document.getElementById('timeDisplay').textContent = timeString;
+            
+            // Change color based on time remaining
+            const timerDisplay = document.getElementById('timeDisplay');
+            if (totalSeconds <= 300) { // 5 minutes or less
+                timerDisplay.style.color = '#ff4444';
+            } else if (totalSeconds <= 600) { // 10 minutes or less
+                timerDisplay.style.color = '#ffaa00';
+            } else {
+                timerDisplay.style.color = 'white';
+            }
+            
+            // Subtract one second
+            totalSeconds--;
+        }
+
+        function startTimer() {
+            if (timerRunning) return; // Don't start if already running
+            
+            totalSeconds = 900; // Reset to 15 minutes
+            timerRunning = true;
+            
+            // Run immediately once
+            runTimer();
+            
+            // Then run every second
+            timerInterval = setInterval(runTimer, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            timerRunning = false;
+        }
+
+        function addBonusTime() {
+            totalSeconds += 5; // Add 5 seconds
+            bonusTime += 5;
+            showNotification('Bonus +5 seconds for correct answer!', 'success');
+        }
+
+        // Shuffle array function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Generate shuffled questions with shuffled options
+        function generateShuffledQuestions() {
+            // First shuffle the questions themselves
+            shuffledQuestions = shuffleArray(originalQuestions);
+            correctAnswers = {};
+            
+            // For each question, shuffle its options and update correct answer
+            shuffledQuestions.forEach((questionData, questionIndex) => {
+                const originalCorrectIndex = questionData.correct;
+                const originalCorrectAnswer = questionData.options[originalCorrectIndex];
+                
+                // Create array of options with their original indices
+                const optionsWithIndices = questionData.options.map((option, index) => ({
+                    text: option,
+                    originalIndex: index
+                }));
+                
+                // Shuffle the options
+                const shuffledOptions = shuffleArray(optionsWithIndices);
+                
+                // Find new position of correct answer
+                const newCorrectIndex = shuffledOptions.findIndex(option => 
+                    option.originalIndex === originalCorrectIndex
+                );
+                
+                // Update question data
+                questionData.shuffledOptions = shuffledOptions.map(option => option.text);
+                
+                // Store correct answer as letter (a, b, c, d)
+                const letters = ['a', 'b', 'c', 'd'];
+                correctAnswers[`q${questionIndex + 1}`] = letters[newCorrectIndex];
+            });
+        }
+
+        // Create HTML for shuffled questions
+        function createShuffledQuestionsHTML() {
+            const examForm = document.getElementById('examForm');
+            examForm.innerHTML = ''; // Clear existing questions
+            
+            shuffledQuestions.forEach((questionData, index) => {
+                const questionNum = index + 1;
+                const letters = ['a', 'b', 'c', 'd'];
+                
+                const questionHTML = `
+                    <div class="question-container">
+                        <div class="question-text">${questionData.question}</div>
+                        <div class="options">
+                            ${questionData.shuffledOptions.map((option, optionIndex) => `
+                                <label class="option">
+                                    <input type="radio" name="q${questionNum}" value="${letters[optionIndex]}">
+                                    ${letters[optionIndex]}. ${option}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                examForm.innerHTML += questionHTML;
+            });
+            
+            // Re-add click handlers to new options
+            addOptionClickHandlers();
+        }
+
+        // Add click handlers to option elements
+        function addOptionClickHandlers() {
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    const questionName = radio.name;
+                    const selectedValue = radio.value;
+                    
+                    // Check if this was already answered
+                    const wasAnswered = document.querySelector(`input[name="${questionName}"]:checked`) !== null;
+                    
+                    radio.checked = true;
+                    
+                    // Remove selected class from siblings
+                    const siblings = this.parentElement.querySelectorAll('.option');
+                    siblings.forEach(sibling => sibling.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update question grid
+                    updateQuestionGrid();
+                    
+                    // Check if answer is correct and give bonus time (only if not previously answered and test is active)
+                    if (!wasAnswered && timerRunning) {
+                        const correctAnswer = correctAnswers[questionName];
+                        if (selectedValue === correctAnswer) {
+                            addBonusTime();
+                        }
+                    }
+                    
+                    // Automatically move to next question after 1 second delay
+                    setTimeout(() => {
+                        if (currentQuestion < 19) {
+                            currentQuestion++;
+                            showCurrentQuestion();
+                        }
+                    }, 1000);
+                });
+            });
+        }
+
+        // Initialize questions and shuffle
+        function initializeQuestions() {
+            // Generate new shuffled questions and options
+            generateShuffledQuestions();
+            
+            // Create HTML for shuffled questions
+            createShuffledQuestionsHTML();
+            
+            // Get question containers
+            questions = document.querySelectorAll('#examForm .question-container');
+            questionOrder = Array.from({length: 20}, (_, i) => i);
+            
+            currentQuestion = 0;
+            createQuestionGrid();
+            showCurrentQuestion();
+        }
+
+        function createQuestionGrid() {
+            const grid = document.getElementById('questionGrid');
+            if (grid) {
+                grid.innerHTML = '';
+                
+                for (let i = 0; i < 20; i++) {
+                    const gridItem = document.createElement('div');
+                    gridItem.style.cssText = `
+                        width: 35px;
+                        height: 35px;
+                        border: 2px solid #ddd;
+                        border-radius: 8px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        font-weight: 600;
+                        font-size: 0.9em;
+                        transition: all 0.3s ease;
+                        background: white;
+                    `;
+                    gridItem.textContent = i + 1;
+                    gridItem.onclick = () => {
+                        currentQuestion = i;
+                        showCurrentQuestion();
+                    };
+                    grid.appendChild(gridItem);
+                }
+                updateQuestionGrid();
+            }
+        }
+
+        function updateQuestionGrid() {
+            const gridItems = document.querySelectorAll('#questionGrid div');
+            gridItems.forEach((item, index) => {
+                const questionNum = index + 1;
+                const isAnswered = document.querySelector(`input[name="q${questionNum}"]:checked`) !== null;
+                const isCurrent = index === currentQuestion;
+                
+                if (isCurrent) {
+                    item.style.background = '#4facfe';
+                    item.style.color = 'white';
+                    item.style.borderColor = '#4facfe';
+                } else if (isAnswered) {
+                    item.style.background = '#1e7e34';  // Dark green for answered
+                    item.style.color = 'white';
+                    item.style.borderColor = '#1e7e34';
+                } else {
+                    item.style.background = 'white';
+                    item.style.color = '#333';
+                    item.style.borderColor = '#ddd';
+                }
+            });
+        }
+
+        function showCurrentQuestion() {
+            // Hide all questions
+            document.querySelectorAll('.question-container').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show current question
+            const questionIndex = questionOrder[currentQuestion];
+            const questionContainers = document.querySelectorAll('#examForm .question-container');
+            
+            if (questionContainers[questionIndex]) {
+                questionContainers[questionIndex].style.display = 'block';
+            }
+            
+            // Update navigation
+            document.getElementById('currentQuestionNum').textContent = currentQuestion + 1;
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').disabled = currentQuestion === 19;
+            
+            // Show/hide submit button on last question
+            const submitBtn = document.getElementById('submitTestBtn');
+            if (currentQuestion === 19) {
+                submitBtn.style.display = 'inline-block';
+                document.getElementById('nextBtn').style.display = 'none';
+            } else {
+                submitBtn.style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            }
+            
+            // Update button styles
+            document.getElementById('prevBtn').style.opacity = currentQuestion === 0 ? '0.5' : '1';
+            document.getElementById('nextBtn').style.opacity = currentQuestion === 19 ? '0.5' : '1';
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Navigation event listeners
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showCurrentQuestion();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            if (currentQuestion < 19) {
+                currentQuestion++;
+                showCurrentQuestion();
+            }
+        });
+
+        document.getElementById('summaryBtn').addEventListener('click', function() {
+            showSummary();
+        });
+
+        document.getElementById('submitTestBtn').addEventListener('click', function() {
+            // Count unanswered questions
+            let unansweredCount = 0;
+            for (let i = 1; i <= 20; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!selectedAnswer) {
+                    unansweredCount++;
+                }
+            }
+            
+            const confirmSubmit = document.createElement('div');
+            confirmSubmit.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                z-index: 2000;
+                text-align: center;
+                max-width: 450px;
+            `;
+            
+            let warningMessage = '';
+            if (unansweredCount > 0) {
+                warningMessage = `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                    <strong style="color: #856404;">⚠️ Warning:</strong><br>
+                    <span style="color: #856404;">You have ${unansweredCount} unanswered question${unansweredCount > 1 ? 's' : ''}. These will be marked as incorrect.</span>
+                </div>`;
+            }
+            
+            confirmSubmit.innerHTML = `
+                <h3 style="color: #dc3545; margin-bottom: 15px;">🎯 Submit Test?</h3>
+                ${warningMessage}
+                <p style="margin-bottom: 20px; color: #333;">Are you sure you want to submit your test? This action cannot be undone.</p>
+                <button onclick="this.parentElement.remove(); autoSubmitTest();" style="background: #dc3545; color: white; border: none; padding: 12px 24px; border-radius: 8px; margin-right: 10px; cursor: pointer; font-weight: 600;">Yes, Submit Test</button>
+                <button onclick="this.parentElement.remove();" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancel</button>
+            `;
+            document.body.appendChild(confirmSubmit);
+        });
+
+        document.getElementById('closeSummaryBtn').addEventListener('click', function() {
+            document.getElementById('summaryModal').style.display = 'none';
+        });
+
+        document.getElementById('submitFromSummaryBtn').addEventListener('click', function() {
+            // Count unanswered questions
+            let unansweredCount = 0;
+            for (let i = 1; i <= 20; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!selectedAnswer) {
+                    unansweredCount++;
+                }
+            }
+            
+            if (unansweredCount > 0) {
+                const finalConfirm = document.createElement('div');
+                finalConfirm.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+                    z-index: 3000;
+                    text-align: center;
+                    max-width: 450px;
+                `;
+                finalConfirm.innerHTML = `
+                    <h3 style="color: #dc3545; margin-bottom: 15px;">⚠️ Final Confirmation</h3>
+                    <div style="background: #f8d7da; border: 1px solid #dc3545; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                        <strong style="color: #721c24;">You have ${unansweredCount} unanswered question${unansweredCount > 1 ? 's' : ''}!</strong><br>
+                        <span style="color: #721c24;">These will be marked as incorrect and affect your grade.</span>
+                    </div>
+                    <p style="margin-bottom: 20px; color: #333;">Do you still want to submit the test?</p>
+                    <button onclick="this.parentElement.remove(); document.getElementById('summaryModal').style.display = 'none'; autoSubmitTest();" style="background: #dc3545; color: white; border: none; padding: 12px 24px; border-radius: 8px; margin-right: 10px; cursor: pointer; font-weight: 600;">Submit Anyway</button>
+                    <button onclick="this.parentElement.remove();" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">Go Back & Answer</button>
+                `;
+                document.body.appendChild(finalConfirm);
+            } else {
+                document.getElementById('summaryModal').style.display = 'none';
+                autoSubmitTest();
+            }
+        });
+
+        // Form validation and button enabling
+        function validateForm() {
+            const lastName = document.getElementById('studentLastName').value.trim();
+            const firstName = document.getElementById('studentFirstName').value.trim();
+            const grade = document.getElementById('studentGrade').value;
+            const section = document.getElementById('studentSection').value.trim();
+            const agreement = document.getElementById('agreementCheck').checked;
+
+            const isValid = lastName && firstName && grade && section && agreement;
+            
+            const startBtn = document.getElementById('startTestBtn');
+            if (isValid) {
+                startBtn.disabled = false;
+                startBtn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
+                startBtn.style.cursor = 'pointer';
+            } else {
+                startBtn.disabled = true;
+                startBtn.style.background = '#ccc';
+                startBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        // Add event listeners to all form fields
+        document.addEventListener('DOMContentLoaded', function() {
+            const formFields = ['studentLastName', 'studentFirstName', 'studentGrade', 'studentSection', 'agreementCheck'];
+            formFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.addEventListener('input', validateForm);
+                    field.addEventListener('change', validateForm);
+                }
+            });
+        });
+
+        // Start test functionality
+        document.getElementById('startTestBtn').addEventListener('click', function() {
+            const lastName = document.getElementById('studentLastName').value.trim();
+            const firstName = document.getElementById('studentFirstName').value.trim();
+            const middleName = document.getElementById('studentMiddleName').value.trim();
+            const grade = document.getElementById('studentGrade').value;
+            const section = document.getElementById('studentSection').value.trim();
+            const agreement = document.getElementById('agreementCheck').checked;
+
+            // Validate required fields
+            if (!lastName || !firstName || !grade || !section || !agreement) {
+                showNotification('Please fill in all required fields and check the agreement!', 'error');
+                return;
+            }
+
+            // Store complete student information
+            window.studentInfo = {
+                fullName: middleName ? `${firstName} ${middleName} ${lastName}` : `${firstName} ${lastName}`,
+                lastName: lastName,
+                firstName: firstName,
+                middleName: middleName,
+                grade: grade,
+                section: section
+            };
+
+            // Hide student info section and show exam
+            document.getElementById('studentInfoSection').style.display = 'none';
+            document.getElementById('examSection').style.display = 'block';
+            document.getElementById('timer').style.display = 'block';
+            
+            // Initialize and shuffle questions
+            initializeQuestions();
+            
+            // Start the timer
+            startTimer();
+        });
+
+        function showSummary() {
+            const summaryContent = document.getElementById('summaryContent');
+            let answeredCount = 0;
+            let summaryHTML = '';
+            
+            // Count answered questions and create summary in order 1-20
+            for (let i = 1; i <= 20; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                const questionContainer = document.querySelector(`input[name="q${i}"]`).closest('.question-container');
+                const questionText = questionContainer.querySelector('.question-text').textContent;
+                
+                if (selectedAnswer) {
+                    answeredCount++;
+                    const selectedOption = selectedAnswer.closest('.option').textContent.trim();
+                    summaryHTML += `
+                        <div style="background: #e8f5e8; border: 1px solid #28a745; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                            <div style="font-weight: 600; color: #155724; margin-bottom: 8px;">Question ${i} ✓</div>
+                            <div style="color: #333; margin-bottom: 8px; font-size: 0.95em;">${questionText}</div>
+                            <div style="color: #28a745; font-weight: 500;">Your answer: ${selectedOption}</div>
+                        </div>
+                    `;
+                } else {
+                    summaryHTML += `
+                        <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                            <div style="font-weight: 600; color: #856404; margin-bottom: 8px;">Question ${i} ⚠️</div>
+                            <div style="color: #333; margin-bottom: 8px; font-size: 0.95em;">${questionText}</div>
+                            <div style="color: #856404; font-weight: 500;">Not answered yet</div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Add header with summary chart
+            const unansweredCount = 20 - answeredCount;
+            const headerHTML = `
+                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 12px; padding: 20px; margin-bottom: 25px; text-align: center;">
+                    <h3 style="margin: 0 0 15px 0; color: #1976d2; font-size: 1.4em;">📋 Review Your Answers</h3>
+                    
+                    <!-- Summary Statistics -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div style="background: rgba(40, 167, 69, 0.1); border: 2px solid #28a745; border-radius: 10px; padding: 15px;">
+                            <div style="font-size: 2em; font-weight: bold; color: #28a745; margin-bottom: 5px;">${answeredCount}</div>
+                            <div style="color: #155724; font-weight: 600; font-size: 0.9em;">Answered</div>
+                        </div>
+                        <div style="background: rgba(255, 193, 7, 0.1); border: 2px solid #ffc107; border-radius: 10px; padding: 15px;">
+                            <div style="font-size: 2em; font-weight: bold; color: #ffc107; margin-bottom: 5px;">${unansweredCount}</div>
+                            <div style="color: #856404; font-weight: 600; font-size: 0.9em;">Remaining</div>
+                        </div>
+                        <div style="background: rgba(23, 162, 184, 0.1); border: 2px solid #17a2b8; border-radius: 10px; padding: 15px;">
+                            <div style="font-size: 2em; font-weight: bold; color: #17a2b8; margin-bottom: 5px;">${Math.round((answeredCount/20)*100)}%</div>
+                            <div style="color: #0c5460; font-weight: 600; font-size: 0.9em;">Complete</div>
+                        </div>
+                    </div>
+                    
+                    <p style="margin: 15px 0 0 0; color: #666; font-size: 1em;">
+                        ${answeredCount < 20 ? `⚠️ You have ${20 - answeredCount} unanswered questions. You can still submit, but they will be marked incorrect.` : '✅ All questions answered! Ready to submit.'}
+                    </p>
+                </div>
+            `;
+            
+            summaryContent.innerHTML = headerHTML + summaryHTML;
+            document.getElementById('summaryModal').style.display = 'block';
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 600;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                ${type === 'error' ? 'background: #f44336;' : 'background: #4caf50;'}
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function autoSubmitTest() {
+            // Stop the timer
+            stopTimer();
+            
+            if (currentQuestion >= 19) {
+                showNotification('Test completed! Calculating results...', 'success');
+            } else {
+                showNotification('Time is up! Test submitted automatically.', 'error');
+            }
+            
+            let score = 0;
+            let totalQuestions = 20;
+            
+            // Check each answer
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                const questionContainer = document.querySelector(`input[name="q${i}"]`).closest('.question-container');
+                const options = questionContainer.querySelectorAll('.option');
+                
+                if (selectedAnswer) {
+                    const userAnswer = selectedAnswer.value;
+                    const correctAnswer = correctAnswers[`q${i}`];
+                    
+                    // Mark all options
+                    options.forEach(option => {
+                        const optionValue = option.querySelector('input').value;
+                        if (optionValue === correctAnswer) {
+                            option.classList.add('correct');
+                        } else if (optionValue === userAnswer && userAnswer !== correctAnswer) {
+                            option.classList.add('incorrect');
+                        }
+                    });
+                    
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                    }
+                }
+            }
+            
+            // Calculate points (5 points per question)
+            const totalPoints = score * 5;
+            const maxPoints = totalQuestions * 5;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            let grade, message;
+            
+            if (percentage >= 95) {
+                grade = "A+";
+                message = "Outstanding! Perfect understanding of the material!";
+            } else if (percentage >= 90) {
+                grade = "A";
+                message = "Excellent work! You have mastered the concepts!";
+            } else if (percentage >= 85) {
+                grade = "B+";
+                message = "Very good! Strong grasp of the material!";
+            } else if (percentage >= 80) {
+                grade = "B";
+                message = "Good job! You understand most concepts well!";
+            } else if (percentage >= 75) {
+                grade = "C+";
+                message = "Fair performance. Review the material for better understanding.";
+            } else if (percentage >= 70) {
+                grade = "C";
+                message = "Below passing score. Please study more and retake the test.";
+            } else {
+                grade = "F";
+                message = "Please review the material thoroughly and retake the test.";
+            }
+            
+            // Display results with complete student information
+            document.getElementById('scoreDisplay').textContent = `${totalPoints}/${maxPoints} points (${percentage}%)`;
+            document.getElementById('gradeDisplay').textContent = `Grade: ${grade}`;
+            document.getElementById('feedbackMessage').textContent = message;
+            document.getElementById('studentInfo').innerHTML = `
+                <strong>Student:</strong> ${window.studentInfo.fullName}<br>
+                <strong>Grade & Section:</strong> ${window.studentInfo.grade} - ${window.studentInfo.section}<br>
+                <strong>Bonus Time Earned:</strong> ${bonusTime} seconds
+            `;
+            document.getElementById('results').classList.add('show');
+            
+            // If failed (below 80%), show YouTube subscription page after showing results
+            if (percentage < 80) {
+                setTimeout(() => {
+                    showYouTubeSubscriptionPage();
+                }, 3000);
+            }
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Option click handlers are now added dynamically in addOptionClickHandlers() function
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!timerRunning) return;
+            
+            if (e.key === 'ArrowLeft' && currentQuestion > 0) {
+                currentQuestion--;
+                showCurrentQuestion();
+            } else if (e.key === 'ArrowRight' && currentQuestion < 19) {
+                currentQuestion++;
+                showCurrentQuestion();
+            }
+        });
+
+        function showYouTubeSubscriptionPage() {
+            // Create full-screen YouTube subscription overlay
+            const subscriptionOverlay = document.createElement('div');
+            subscriptionOverlay.id = 'youtubeSubscriptionOverlay';
+            subscriptionOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #e0e0e0, #fafafa);
+                z-index: 3000;
+                overflow-y: auto;
+                padding: 50px 20px;
+                box-sizing: border-box;
+                font-family: "Poppins", Arial, sans-serif;
+            `;
+            
+            subscriptionOverlay.innerHTML = `
+                <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 40px; margin-bottom: 30px;">
+                        <h1 style="color: #d50000; font-size: 2.5rem; margin-bottom: 10px;">🎥 Subscribe to PrinceYahweTV</h1>
+                        <p style="font-size: 1.2rem; color: #333; margin-bottom: 30px;">Stay updated with ICT tutorials, research lessons, and sports content!</p>
+                        
+                        <!-- Failure Message -->
+                        <div style="background: #ffebee; border: 2px solid #f44336; border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+                            <h3 style="color: #c62828; margin: 0 0 10px 0;">📚 Need More Study Materials?</h3>
+                            <p style="color: #d32f2f; margin: 0; font-size: 1.1rem;">Your test score is below passing (80%). Subscribe to our channel for additional learning resources and tutorials!</p>
+                        </div>
+
+                        <!-- YouTube Subscribe Buttons -->
+                        <div style="margin: 30px 0;">
+                            <!-- Manual Subscribe Button -->
+                            <button onclick="window.open('https://www.youtube.com/@princeyahwetv?sub_confirmation=1', '_blank', 'noopener,noreferrer')" 
+                                    style="background-color: #ff0000; color: white; border: none; border-radius: 8px; padding: 15px 30px; font-size: 1.2rem; cursor: pointer; margin: 10px; transition: all 0.3s ease; font-weight: 600; box-shadow: 0 4px 15px rgba(255,0,0,0.3);"
+                                    onmouseover="this.style.backgroundColor='#cc0000'; this.style.transform='translateY(-2px)'"
+                                    onmouseout="this.style.backgroundColor='#ff0000'; this.style.transform='translateY(0)'">
+                                👉 Subscribe to PrinceYahweTV Now!
+                            </button>
+                        </div>
+                        
+                        <!-- Student Info Display -->
+                        <div style="margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 10px; border-left: 4px solid #ff5722;">
+                            <h4 style="color: #bf360c; margin: 0 0 10px 0;">📋 Your Test Results:</h4>
+                            <p style="color: #333; margin: 5px 0; font-size: 0.95rem;"><strong>Student:</strong> ${window.studentInfo ? window.studentInfo.fullName : 'Unknown'}</p>
+                            <p style="color: #333; margin: 5px 0; font-size: 0.95rem;"><strong>Grade & Section:</strong> ${window.studentInfo ? window.studentInfo.grade + ' - ' + window.studentInfo.section : 'Unknown'}</p>
+                            <p style="color: #d32f2f; margin: 5px 0; font-size: 0.95rem;"><strong>Score:</strong> Below 80% (Failed)</p>
+                            <p style="color: #666; margin: 10px 0 0 0; font-size: 0.9rem; font-style: italic;">Subscribe to improve your understanding and retake the test!</p>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <button onclick="document.getElementById('youtubeSubscriptionOverlay').remove()" 
+                                    style="background: #28a745; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; font-weight: 600;"
+                                    onmouseover="this.style.backgroundColor='#218838'"
+                                    onmouseout="this.style.backgroundColor='#28a745'">
+                                📚 Continue & Retake Test
+                            </button>
+                            
+                            <button onclick="document.getElementById('youtubeSubscriptionOverlay').remove()" 
+                                    style="background: #6c757d; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;"
+                                    onmouseover="this.style.backgroundColor='#5a6268'"
+                                    onmouseout="this.style.backgroundColor='#6c757d'">
+                                ✖️ Close
+                            </button>
+                        </div>
+                    </div>
+
+                    <footer style="color: #666; font-size: 0.9rem; text-align: center;">
+                        © 2025 PrinceYahweTV | ICT • Research • Sports
+                    </footer>
+                </div>
+            `;
+            
+            document.body.appendChild(subscriptionOverlay);
+        }
+
+        function sendResultsToTeacher() {
+            // Get current results from the display
+            const scoreText = document.getElementById('scoreDisplay').textContent;
+            const gradeText = document.getElementById('gradeDisplay').textContent;
+            
+            // Extract values from displayed results
+            const scoreMatch = scoreText.match(/(\d+)\/(\d+) points \((\d+)%\)/);
+            if (!scoreMatch) return;
+            
+            const totalPoints = parseInt(scoreMatch[1]);
+            const maxPoints = parseInt(scoreMatch[2]);
+            const percentage = parseInt(scoreMatch[3]);
+            const score = totalPoints / 5; // Since each question is 5 points
+            const grade = gradeText.replace('Grade: ', '');
+            const currentDate = new Date().toLocaleString('en-PH', {
+                timeZone: 'Asia/Manila',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            // Get detailed answer breakdown
+            let answerDetails = '';
+            for (let i = 1; i <= 20; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                const questionContainer = document.querySelector(`input[name="q${i}"]`).closest('.question-container');
+                const questionText = questionContainer.querySelector('.question-text').textContent;
+                const correctAnswer = correctAnswers[`q${i}`];
+                
+                if (selectedAnswer) {
+                    const userAnswer = selectedAnswer.value;
+                    const isCorrect = userAnswer === correctAnswer;
+                    const selectedOption = selectedAnswer.closest('.option').textContent.trim();
+                    
+                    answerDetails += `Question ${i}: ${isCorrect ? '✓ CORRECT' : '✗ INCORRECT'}\n`;
+                    answerDetails += `   Q: ${questionText}\n`;
+                    answerDetails += `   Student Answer: ${selectedOption}\n`;
+                    if (!isCorrect) {
+                        // Find correct option text
+                        const correctOption = questionContainer.querySelector(`input[value="${correctAnswer}"]`).closest('.option').textContent.trim();
+                        answerDetails += `   Correct Answer: ${correctOption}\n`;
+                    }
+                    answerDetails += '\n';
+                } else {
+                    answerDetails += `Question ${i}: ⚠ NOT ANSWERED\n`;
+                    answerDetails += `   Q: ${questionText}\n\n`;
+                }
+            }
+            
+            const subject = `📊 Grade 9 HTML Test Results - ${window.studentInfo.fullName} (${percentage}% - ${grade})`;
+            const body = `Dear Teacher,
+
+AUTOMATED TEST RESULTS NOTIFICATION
+
+═══════════════════════════════════════════════════════════════
+
+STUDENT INFORMATION:
+👤 Full Name: ${window.studentInfo.fullName}
+🎓 Grade & Section: ${window.studentInfo.grade} - ${window.studentInfo.section}
+
+═══════════════════════════════════════════════════════════════
+
+TEST SUMMARY:
+📝 Test Title: Grade 9 HTML Summative Test Part 1
+📖 Topics Covered: Programming Trends & Computer Ergonomics
+📊 Total Questions: 20 (Multiple Choice)
+⏰ Test Date & Time: ${currentDate}
+🎯 Points per Question: 5 points
+
+═══════════════════════════════════════════════════════════════
+
+PERFORMANCE RESULTS:
+✅ Correct Answers: ${score} out of 20
+📈 Total Points: ${totalPoints} out of ${maxPoints} points
+📊 Percentage Score: ${percentage}%
+🎓 Letter Grade: ${grade}
+⏱️ Bonus Time Earned: ${bonusTime} seconds (for correct answers)
+
+GRADE INTERPRETATION:
+${percentage >= 95 ? '🌟 OUTSTANDING - Perfect understanding of the material!' :
+  percentage >= 90 ? '🏆 EXCELLENT - Student has mastered the concepts!' :
+  percentage >= 85 ? '👍 VERY GOOD - Strong grasp of the material!' :
+  percentage >= 80 ? '✅ GOOD - Student understands most concepts well!' :
+  percentage >= 75 ? '⚠️ FAIR - Review recommended for better understanding.' :
+  '❌ BELOW PASSING - Student needs additional support and review.'}
+
+${percentage < 80 ? '⚠️ IMPORTANT NOTE: Student scored below the passing grade (80%) and was automatically directed to additional learning resources.' : '🎉 CONGRATULATIONS! Student successfully passed the test!'}
+
+═══════════════════════════════════════════════════════════════
+
+DETAILED ANSWER BREAKDOWN:
+
+${answerDetails}
+
+═══════════════════════════════════════════════════════════════
+
+This is an automated notification from the Grade 9 HTML Testing System.
+
+Generated on: ${currentDate}
+System: Grade 9 HTML Summative Assessment Platform
+
+Best regards,
+Automated Testing & Assessment System`;
+
+            // Create mailto link with teacher's email from form
+            const teacherEmail = 'joel.rodriguez@deped.gov.ph'; // Default teacher email
+            const mailtoLink = `mailto:${teacherEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open email client immediately when button is clicked
+            try {
+                window.open(mailtoLink, '_blank', 'noopener,noreferrer');
+                showNotification('📧 Email client opened with results for your teacher!', 'success');
+            } catch (error) {
+                console.error('Email sending failed:', error);
+                showNotification('📧 Email client not available, but results are saved.', 'info');
+            }
+        }
+
+        function resetTest() {
+            // Stop timer first
+            stopTimer();
+            
+            // Reset exam form
+            document.getElementById('examForm').reset();
+            
+            // Reset student info form
+            document.getElementById('studentLastName').value = '';
+            document.getElementById('studentFirstName').value = '';
+            document.getElementById('studentMiddleName').value = '';
+            document.getElementById('studentGrade').value = '';
+            document.getElementById('studentSection').value = '';
+            document.getElementById('agreementCheck').checked = false;
+            
+            // Remove all styling classes
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Hide results and exam section
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('examSection').style.display = 'none';
+            document.getElementById('studentInfoSection').style.display = 'block';
+            document.getElementById('timer').style.display = 'none';
+            
+            // Reset timer variables
+            totalSeconds = 900; // Reset to 15 minutes
+            timerRunning = false;
+            bonusTime = 0;
+            currentQuestion = 0;
+            questionOrder = [];
+            
+            // Reset timer display
+            document.getElementById('timeDisplay').textContent = '15:00';
+            document.getElementById('timeDisplay').style.color = 'white';
+            
+            // Reset start button
+            validateForm();
+            
+            // Clear stored student info
+            window.studentInfo = null;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'990c6ba5070afebc',t:'MTc2MDgzNjQ4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
